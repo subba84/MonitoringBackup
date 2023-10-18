@@ -1,0 +1,14 @@
+C:\Users\Administrator\source\repos\Monitoring\ReportingService\bin\Release\ReportingService.exe.config
+C:\Users\Administrator\source\repos\Monitoring\ReportingService\bin\Release\ReportingService.exe
+C:\Users\Administrator\source\repos\Monitoring\ReportingService\bin\Release\ReportingService.pdb
+C:\Users\Administrator\source\repos\Monitoring\ReportingService\obj\Release\ReportingService.csproj.AssemblyReference.cache
+C:\Users\Administrator\source\repos\Monitoring\ReportingService\obj\Release\ReportingService.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\Monitoring\ReportingService\obj\Release\ReportingService.exe
+C:\Users\Administrator\source\repos\Monitoring\ReportingService\obj\Release\ReportingService.pdb
+C:\source\repos\Monitoring\ReportingService\bin\Release\ReportingService.exe.config
+C:\source\repos\Monitoring\ReportingService\bin\Release\ReportingService.exe
+C:\source\repos\Monitoring\ReportingService\bin\Release\ReportingService.pdb
+C:\source\repos\Monitoring\ReportingService\obj\Release\ReportingService.csproj.AssemblyReference.cache
+C:\source\repos\Monitoring\ReportingService\obj\Release\ReportingService.csproj.CoreCompileInputs.cache
+C:\source\repos\Monitoring\ReportingService\obj\Release\ReportingService.exe
+C:\source\repos\Monitoring\ReportingService\obj\Release\ReportingService.pdb

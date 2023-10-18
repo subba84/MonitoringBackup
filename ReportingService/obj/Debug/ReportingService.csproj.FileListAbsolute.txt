@@ -1,0 +1,12 @@
+C:\Users\Administrator\source\repos\Monitoring\ReportingService\bin\Debug\ReportingService.exe.config
+C:\Users\Administrator\source\repos\Monitoring\ReportingService\bin\Debug\ReportingService.exe
+C:\Users\Administrator\source\repos\Monitoring\ReportingService\bin\Debug\ReportingService.pdb
+C:\Users\Administrator\source\repos\Monitoring\ReportingService\obj\Debug\ReportingService.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\Monitoring\ReportingService\obj\Debug\ReportingService.exe
+C:\Users\Administrator\source\repos\Monitoring\ReportingService\obj\Debug\ReportingService.pdb
+C:\source\repos\Monitoring\ReportingService\bin\Debug\ReportingService.exe.config
+C:\source\repos\Monitoring\ReportingService\bin\Debug\ReportingService.exe
+C:\source\repos\Monitoring\ReportingService\bin\Debug\ReportingService.pdb
+C:\source\repos\Monitoring\ReportingService\obj\Debug\ReportingService.csproj.CoreCompileInputs.cache
+C:\source\repos\Monitoring\ReportingService\obj\Debug\ReportingService.exe
+C:\source\repos\Monitoring\ReportingService\obj\Debug\ReportingService.pdb
