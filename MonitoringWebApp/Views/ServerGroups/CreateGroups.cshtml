@@ -1,0 +1,101 @@
+﻿@model Monitoring.Common.CommonModels.DeviceGroupViewModel
+
+@{
+    ViewBag.Title = "CreateGroups";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <section class="content">
+        <label class="label-info">Create Group</label>
+        @using (Html.BeginForm("", "Groups/SaveGroups", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group row">
+                @Html.LabelFor(model => model.GroupName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @Html.EditorFor(model => model.GroupName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GroupName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            
+            @*<div class="form-group row">
+                <div> @Html.RadioButtonFor(m => m.DeviceTypeId, "1") Servers </div> &nbsp;
+                <div> @Html.RadioButtonFor(m => m.DeviceTypeId, "2")Ping devices </div>
+                @Html.ValidationMessageFor(model => model.DeviceTypeId, "", new { @class = "text-danger" })
+            </div>*@
+            @*<div class="form-group row">
+                @Html.LabelFor(model => model.ServerGroupViewModel.Servers, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+
+                    @Html.DropDownListFor(m => m.ServerGroupViewModel.Servers, new SelectList(ViewBag.Devices, "DeviceId", "DeviceName"), new { @multiple = "multiple", @placeholder = "Please select country", @class = "ddlMultiSlectBox" })
+                </div>
+            </div>*@
+           
+            <table class="table table-bordered">
+                <tr>
+                    <th></th>
+                    <th>Warning</th>
+                    <th>Critical</th>
+                </tr>
+                <tr>
+                    <td><b>Cpu</b></td>
+                    <td>
+                        @Html.EditorFor(model => model.ServerGroupViewModel.CpuWarning, new { htmlAttributes = new { @class = "form-control bg-warning" } })
+                        @Html.ValidationMessageFor(model => model.ServerGroupViewModel.CpuWarning, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.ServerGroupViewModel.CpuCritical, new { htmlAttributes = new { @class = "form-control bg-danger" } })
+                        @Html.ValidationMessageFor(model => model.ServerGroupViewModel.CpuCritical, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Ram</b></td>
+                    <td>
+                        @Html.EditorFor(model => model.ServerGroupViewModel.MemoryWarning, new { htmlAttributes = new { @class = "form-control bg-warning" } })
+                        @Html.ValidationMessageFor(model => model.ServerGroupViewModel.MemoryWarning, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.ServerGroupViewModel.MemoryCritical, new { htmlAttributes = new { @class = "form-control bg-danger" } })
+                        @Html.ValidationMessageFor(model => model.ServerGroupViewModel.MemoryCritical, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Network</b></td>
+                    <td>
+                        @Html.EditorFor(model => model.ServerGroupViewModel.NetworkWarning, new { htmlAttributes = new { @class = "form-control bg-warning" } })
+                        @Html.ValidationMessageFor(model => model.ServerGroupViewModel.NetworkWarning, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.ServerGroupViewModel.NetworkCritical, new { htmlAttributes = new { @class = "form-control bg-danger" } })
+                        @Html.ValidationMessageFor(model => model.ServerGroupViewModel.NetworkCritical, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Disk</b></td>
+                    <td>
+                        @Html.EditorFor(model => model.ServerGroupViewModel.DiskWarning, new { htmlAttributes = new { @class = "form-control bg-warning" } })
+                        @Html.ValidationMessageFor(model => model.ServerGroupViewModel.DiskWarning, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.ServerGroupViewModel.DiskCritical, new { htmlAttributes = new { @class = "form-control bg-danger" } })
+                        @Html.ValidationMessageFor(model => model.ServerGroupViewModel.DiskCritical, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+            </table>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn bg-secondary" />
+                </div>
+            </div>
+        </div>
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </section>
+</div>

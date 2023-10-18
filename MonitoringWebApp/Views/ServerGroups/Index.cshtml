@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "Server Groups";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Hidden("hidGetGroupsUrl", (object)ViewBag.GetGroupsUrl)
+<div class="content-wrapper">
+    <section class="content">
+        <h4 class="mt-3">Server Groups</h4>
+        <a href="/ServerGroups/CreateGroups">
+            <!-- <i class="far fa-circle nav-icon"></i> -->
+            <p>Create Group</p>
+        </a>
+        <br />
+        <div class="row">
+            <table id="tblGroups" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Group Id</th>
+                        <th scope="col">Group Name</th>
+                        <th scope="col">Device Type</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        LoadData();
+
+        function removeRow(thisObj) {
+            var $row = $(thisObj).closest("tr");
+            var $firstrow = $row.find('td:eq(0)').text();
+            removeRowData($firstrow);
+            window.location.href = '/ServerGroups';
+        }
+
+        function EditRow(thisObj) {
+            var $row = $(thisObj).closest("tr");
+            var $currentrow = $row.find('td:eq(0)').text();
+            EditRowData($currentrow);
+        }
+
+        function EditDeviceManager(thisObj) {
+            var $row = $(thisObj).closest("tr");
+            var $currentrow = $row.find('td:eq(0)').text();
+            EditDeviceManagerData($currentrow);
+        }
+
+
+        function LoadData() {
+            $("#tblGroups tbody tr").remove();
+            $.ajax({
+                type: 'GET',
+                url: '/ServerGroups/GetGroups',
+                dataType: 'json',
+                data: {},
+                success: function (data) {
+                    var items = '';
+                    $.each(data, function (i, item) {
+                        var rows = "<tr>"
+                            + "<td class='prtoducttd'>" + item.GroupId + "</td>"
+                            + "<td class='prtoducttd'>" + item.GroupName + "</td>"
+                            + "<td class='prtoducttd'>" + item.DeviceTypeName + "</td>"
+                            + "<td><button  class='btn btn-success' ><i class='fas fa-server' onclick='EditDeviceManager($(this))'></i></button> &nbsp;<button  class='btn btn-success' ><i class='fas fa-edit' onclick='EditRow($(this))'></i></button> &nbsp;<button class='btn btn-danger' onclick='removeRow($(this))'><i class='far fa-trash-alt'></i></button></td>"
+                            + "</tr>";
+                        $('#tblGroups tbody').append(rows);
+                    });
+                },
+                error: function (ex) {
+                    var r = jQuery.parseJSON(response.responseText);
+                    alert("Message: " + r.Message);
+                    alert("StackTrace: " + r.StackTrace);
+                    alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+            return false;
+        }
+
+        function removeRowData(rowdata) {
+            $.ajax({
+                type: 'GET',
+                url: '/ServerGroups/DeleteGroup',
+                dataType: 'json',
+                data: { Id: rowdata },
+                success: function (data) {
+
+                },
+                error: function (ex) {
+                    var r = jQuery.parseJSON(response.responseText);
+                    alert("Message: " + r.Message);
+                    alert("StackTrace: " + r.StackTrace);
+                    alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+            LoadData();
+
+            return false;
+        }
+
+        function EditRowData(rowdata) {
+            window.location.href = '/ServerGroups/EditGroups?id=' + rowdata;
+        }
+
+        function EditDeviceManagerData(rowdata) {
+            window.location.href = '/ServerGroups/DeviceManager?id=' + rowdata;
+        }
+
+    </script>
+}

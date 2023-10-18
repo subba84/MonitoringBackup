@@ -1,0 +1,207 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@Html.Hidden("hidGetSlidesUrl", (object)ViewBag.GetSlidesUrl)
+@Html.Hidden("hidGetSlideByIdUrl", (object)ViewBag.GetSlideByIdUrl)
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- <div class="col-sm-6">
+                  <h4 class="m-0">Dashboard</h4>
+                </div> -->
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="./index.html">Home</a></li>
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid border-top pt-2">
+            <h5 class="mt-1">Dashboard</h5>
+            <!-- Main row -->
+            <div class="mainContainer">
+
+                <div id="carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+    <div class="clearfix"></div>
+    <br>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        var GetSlidesUrl = $('#hidGetSlidesUrl').val();
+        var GetSlideByIdUrl = $('#hidGetSlideByIdUrl').val();
+        var slidehtml = '';
+        var servertemplate = "<div class='col-lg-2 col-md-4 my-1 px-1'> <div class='colBox'> <div class='colBox " + '{colour}' + "'> <span class='colBox_left'> <span class='keyText'>CPU</span> <span class='valText'>" + '{cpupercentage}%' + "</span></span> <span class='colBox_right'> <span class='keyText'>RAM</span> <span class='valText'>" + '{rampercentage}%' + "</span></span> <div class='text - center serverName'>" + '{servername}' + "</div> </div> </div> </div>";
+        var otherdevicetemplate = "<div class='col-lg-2 col-md-4 my-1 px-1'> <div class='colBox'> <div class='colBox " + ' {colour}' + "'> <div class='text - center serverName'>" + '{devicename}' + "</div> </div> </div> </div>";
+        var serverhtml;
+        var slideservertemplate;
+        var slideData;
+        var isFirstSlide = true;
+
+        $('#carousel').bind('slide.bs.carousel', function (e) {
+            change();
+        });
+
+        function change() {
+            if (slideData != null) {
+                const elemId = document.getElementsByClassName('carousel-item active')[0].id;
+                console.log(elemId);
+                BindSlidesSlides(elemId);
+            }
+        }
+
+        LoadSlides();
+
+        // used for example purposes
+        function getRandomIntInclusive(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        function LoadSlides() {
+            slideData = null;
+            $.ajax({
+                type: 'GET',
+                url: GetSlidesUrl,
+                dataType: 'json',
+                data: {},
+                success: function (data) {
+                    $('.carousel-inner,.carousel-indicators,.carousel-control-prev,.carousel-control-next').empty();
+                    slideData = data;
+                    var items = '';
+                    $.each(data, function (i, itemslide) {
+                        console.log(itemslide);
+                        var finalHtml = '<div class="carousel-item" id="' + itemslide.SlideId + '"></div>';
+                        $(finalHtml).appendTo('.carousel-inner');
+                        $('.carousel-item').first().addClass('active');
+                        $('#carousel').carousel();
+                        change();
+                        //$.each(item, function (j, itemslide) {
+                        //    slideservertemplate = '';
+                        //    //if (isFirstSlide) {
+                        //    //    $.each(itemslide.ServerAnalytics, function (k, itemslideanalytics) {
+                        //    //        var tempservertemplate = servertemplate;
+                        //    //        if (itemslideanalytics.Colour == "Red") {
+                        //    //            tempservertemplate = tempservertemplate.replace("{colour}", "bg-danger");
+                        //    //        }
+                        //    //        if (itemslideanalytics.Colour == "Green") {
+                        //    //            tempservertemplate = tempservertemplate.replace("{colour}", "bg-green");
+                        //    //        }
+
+                        //    //        tempservertemplate = tempservertemplate.replace("{cpupercentage}", itemslideanalytics.CpuUtilization);
+                        //    //        tempservertemplate = tempservertemplate.replace("{rampercentage}", itemslideanalytics.RamUtilization);
+                        //    //        tempservertemplate = tempservertemplate.replace("{servername}", itemslideanalytics.ServerDisplayName);
+                        //    //        slideservertemplate += tempservertemplate;
+                        //    //    });
+                        //    //    isFirstSlide = false;
+                        //    //}
+                        //    var finalHtml = '<div class="carousel-item" id="' + itemslide.SlideId + '"><div id="slideTitle"> Slide : ' + itemslide.SlideName + '</div><div class="row">' + slideservertemplate + '</div></div>';
+                        //    $(finalHtml).appendTo('.carousel-inner');
+                        //    $('.carousel-item').first().addClass('active');
+                        //    $('#carousel').carousel();
+                        //});
+                    });
+
+                },
+                error: function (ex) {
+                    var r = jQuery.parseJSON(response.responseText);
+                    alert("Message: " + r.Message);
+                    alert("StackTrace: " + r.StackTrace);
+                    alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+            return false;
+        }
+        function BindSlidesSlides(elemId) {
+            currentSlideData = null;
+            $.ajax({
+                type: 'GET',
+                url: GetSlideByIdUrl + '?SlideId=' + elemId,
+                dataType: 'json',
+                data: {},
+                success: function (data) {
+                    //$('.carousel-inner,.carousel-indicators,.carousel-control-prev,.carousel-control-next').empty();
+                    //currentSlideData = data.filter(d => d.SlideId = elemId);
+                    //console.log(currentSlideData);
+                    //var items = '';
+                    $.each(data, function (i, item) {
+                        $.each(item, function (j, itemslide) {
+                            if (itemslide.DeviceTypeId == 1) {
+                                slideservertemplate = '';
+                                $.each(itemslide.ServerAnalytics, function (k, itemslideanalytics) {
+                                    var tempservertemplate = servertemplate;
+                                    if (itemslideanalytics.Colour == "Red") {
+                                        tempservertemplate = tempservertemplate.replace("{colour}", "bg-danger");
+                                    }
+                                    if (itemslideanalytics.Colour == "Green") {
+                                        tempservertemplate = tempservertemplate.replace("{colour}", "bg-green");
+                                    }
+
+                                    tempservertemplate = tempservertemplate.replace("{cpupercentage}", itemslideanalytics.CpuUtilization);
+                                    tempservertemplate = tempservertemplate.replace("{rampercentage}", itemslideanalytics.RamUtilization);
+                                    tempservertemplate = tempservertemplate.replace("{servername}", itemslideanalytics.ServerDisplayName);
+                                    slideservertemplate += tempservertemplate;
+                                });
+                                const currentslide = document.getElementsByClassName('carousel-item active')[0];
+                                console.log(currentslide);
+                                currentslide.innerHTML = '<div id="slideTitle"> Slide : ' + itemslide.SlideName + '</div><div class="row">' + slideservertemplate + '</div></div>';
+                            }
+                           else {
+                                slideotherdevicetemplate = '';
+                                $.each(itemslide.OtherDeviceAnalytics, function (k, itemslideanalytics) {
+                                    var tempotherdevicetemplate = otherdevicetemplate;
+                                    if (itemslideanalytics.Colour == "Red") {
+                                        tempotherdevicetemplate = tempotherdevicetemplate.replace("{colour}", "bg-danger");
+                                    }
+                                    if (itemslideanalytics.Colour == "Green") {
+                                        tempotherdevicetemplate = tempotherdevicetemplate.replace("{colour}", "bg-green");
+                                    }
+
+                                    tempotherdevicetemplate = tempotherdevicetemplate.replace("{devicename}", itemslideanalytics.OtherDeviceName);
+                                    slideotherdevicetemplate += tempotherdevicetemplate;
+                                });
+                                const currentslide = document.getElementsByClassName('carousel-item active')[0];
+                                console.log(currentslide);
+                                currentslide.innerHTML = '<div id="slideTitle"> Slide : ' + itemslide.SlideName + '</div><div class="row">' + slideotherdevicetemplate + '</div></div>';
+                            }
+
+
+                            //var finalHtml = '<div class="carousel-item" id="' + itemslide.SlideId + '"><div id="slideTitle"> Slide : ' + itemslide.SlideName + '</div><div class="row">' + slideservertemplate + '</div></div>';
+                            //$(finalHtml).appendTo('.carousel-inner');
+                            //$('.carousel-item').first().addClass('active');
+                            //$('#carousel').carousel();
+                        });
+                    });
+
+                },
+                error: function (ex) {
+                    var r = jQuery.parseJSON(response.responseText);
+                    alert("Message: " + r.Message);
+                    alert("StackTrace: " + r.StackTrace);
+                    alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+            return false;
+        }
+
+                                //setInterval(function () { LoadData(); }, 10000);
+
+    </script>
+}

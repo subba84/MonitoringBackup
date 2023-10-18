@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="content-wrapper">
+    <section class="content">
+        <h4 class="mt-3">Devices</h4>
+        <a href="@Url.Action("CreateDevice", "Device", new { Id = ViewBag.deviceTypeId })"><p>Create Device</p></a>
+       
+            <!-- <i class="far fa-circle nav-icon"></i> -->
+            
+        </a>
+        <table id="tblDevices" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Device Id</th>
+                    <th scope="col">Device Name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+
+        const urlParams = new URLSearchParams(window.location.search);
+        var Id = urlParams.get('Id');
+
+        LoadDeviceData();
+
+        function LoadDeviceData() {
+            $("#tblDevices tbody tr").remove();
+            $.ajax({
+                type: 'GET',
+                url: '/Device/GetDeviceByTypeById?Id='+ Id,
+                dataType: 'json',
+                data: {},
+                success: function (data) {
+                    var items = '';
+                    $.each(data, function (i, item) {
+                        var rows = "<tr>"
+                            + "<td class='prtoducttd'>" + item.DeviceId + "</td>"
+                            + "<td class='prtoducttd'>" + item.DeviceName + "</td>"
+                            + "<td><button  class='btn btn-success' ><i class='fas fa-edit' onclick='EditRow($(this))'></i></button> &nbsp;<button class='btn btn-danger' onclick='removeRow($(this))'><i class='far fa-trash-alt'></i></button></td>"
+                            + "</tr>";
+                        $('#tblDevices tbody').append(rows);
+                    });
+                },
+                error: function (ex) {
+                    var r = jQuery.parseJSON(response.responseText);
+                    alert("Message: " + r.Message);
+                    alert("StackTrace: " + r.StackTrace);
+                    alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+            return false;
+        }
+
+        function removeRowData(rowdata) {
+
+            $.ajax({
+                type: 'GET',
+                url: '/Device/DeleteDevice',
+                dataType: 'json',
+                data: { Id: rowdata },
+                success: function (data) {
+
+                },
+                error: function (ex) {
+                    //var r = jQuery.parseJSON(response.responseText);
+                    //alert("Message: " + r.Message);
+                    //alert("StackTrace: " + r.StackTrace);
+                    //alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+            LoadDeviceData();
+
+            return false;
+        }
+
+        function EditRowData(rowdata) {
+            window.location.href = '/Device/EditDevice?Id=' + rowdata;
+        }
+
+        function EditRow(thisObj) {
+            var $row = $(thisObj).closest("tr");
+            var $currentrow = $row.find('td:eq(0)').text();
+            EditRowData($currentrow);
+        }
+
+        function removeRow(thisObj) {
+            var $row = $(thisObj).closest("tr");
+            var $firstrow = $row.find('td:eq(0)').text();
+            console.log($firstrow);
+            removeRowData($firstrow);
+            //// Finds the closest row <tr>
+            //    $tds = $row.find("td");             // Finds all children <td> elements
+        }
+
+    </script>
+}
+

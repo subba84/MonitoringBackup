@@ -1,0 +1,118 @@
+﻿@model Monitoring.Common.SlidesVideModel
+
+@{
+    ViewBag.Title = "CreateSlides";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <section class="content">
+        <label class="label-info">Create Slide</label>
+
+        @using (Html.BeginForm("", "Slides/SaveSlides", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SlideName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SlideName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SlideName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @*<div class="form-group row">
+                        <div> @Html.RadioButtonFor(m => m.DeviceTypeId, "1") Servers </div> &nbsp;
+                        <div> @Html.RadioButtonFor(m => m.DeviceTypeId, "2")Ping devices </div>
+                        @Html.ValidationMessageFor(model => model.DeviceTypeId, "", new { @class = "text-danger" })
+                    </div>*@
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DeviceTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(M => M.DeviceTypeId, new SelectList(Model.DeviceTypes, "DeviceTypeId", "DeviceTypeName"), "Select a Device Type", new { id = "deviceTypeList" })
+                        @Html.HiddenFor(model => model.DeviceTypeId)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Devices, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <select class="form-control chosen-select" multiple name="SelectedDevices" id="deviceList">
+                        </select>
+                        @*@Html.DropDownListFor(Model => Model.Devices, new SelectList(Enumerable.Empty<SelectListItem>(), "DeviceId", "DeviceName"),
+        "Select a Device", new { id = "deviceList",@class = "chosen-select form-control",multiple = "multiple",name = "SelectedDevices"
+        })*@
+                        @*@Html.ListBoxFor(m => m.SelectedServers, new MultiSelectList(Model.Servers, "DeviceId", "DeviceName", Model.SelectedServers), new { @class = "chosen-select form-control", multiple = "multiple" })*@
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </section>
+</div>
+@section Scripts {
+
+    @*<link href="~/Scripts/chosen/prism.css" rel="stylesheet" />*@
+    <link href="~/Content/chosen.min.css" rel="stylesheet" />
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    @*<script src="~/Scripts/chosen/prism.js"></script>*@
+    <script type="text/javascript">
+
+        $(function () {
+            $(".chosen-select").chosen({
+                disable_search_threshold: 10,
+                no_results_text: "Oops, nothing found!"//,
+                // width: "45%"
+            });
+        });
+
+
+        $(document).ready(function () {
+            $("#deviceTypeList").change(function () {
+                var dID = $(this).val();
+                $.ajax({
+                    type: 'GET',
+                    url: '/Device/GetDeviceByTypeById/?Id=' + dID,
+                    dataType: 'json',
+                    data: {},
+                    success: function (data) {
+                        var select = $("#deviceList");
+                        select.empty();
+                        select.append($('<option/>', {
+                            value: 0,
+                            text: "Select a Device"
+                        }));
+                        $.each(data, function (index, itemData) {
+                            select.append($('<option/>', {
+                                /*value: itemData.DeviceId,*/
+                                text: itemData.DeviceName
+                            }));
+                        });
+                        select.trigger("chosen:updated");
+                    },
+                    error: function (ex) {
+                        var r = jQuery.parseJSON(response.responseText);
+                        alert("Message: " + r.Message);
+                        alert("StackTrace: " + r.StackTrace);
+                        alert("ExceptionType: " + r.ExceptionType);
+                    }
+                });
+            });
+        });
+
+
+    </script>
+}
