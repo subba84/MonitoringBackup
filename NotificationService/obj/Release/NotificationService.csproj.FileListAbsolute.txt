@@ -1,0 +1,14 @@
+C:\Users\Administrator\source\repos\Monitoring\NotificationService\bin\Release\NotificationService.exe.config
+C:\Users\Administrator\source\repos\Monitoring\NotificationService\bin\Release\NotificationService.exe
+C:\Users\Administrator\source\repos\Monitoring\NotificationService\bin\Release\NotificationService.pdb
+C:\Users\Administrator\source\repos\Monitoring\NotificationService\obj\Release\NotificationService.csproj.AssemblyReference.cache
+C:\Users\Administrator\source\repos\Monitoring\NotificationService\obj\Release\NotificationService.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\Monitoring\NotificationService\obj\Release\NotificationService.exe
+C:\Users\Administrator\source\repos\Monitoring\NotificationService\obj\Release\NotificationService.pdb
+C:\source\repos\Monitoring\NotificationService\bin\Release\NotificationService.exe.config
+C:\source\repos\Monitoring\NotificationService\bin\Release\NotificationService.exe
+C:\source\repos\Monitoring\NotificationService\bin\Release\NotificationService.pdb
+C:\source\repos\Monitoring\NotificationService\obj\Release\NotificationService.csproj.AssemblyReference.cache
+C:\source\repos\Monitoring\NotificationService\obj\Release\NotificationService.csproj.CoreCompileInputs.cache
+C:\source\repos\Monitoring\NotificationService\obj\Release\NotificationService.exe
+C:\source\repos\Monitoring\NotificationService\obj\Release\NotificationService.pdb
