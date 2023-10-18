@@ -1,0 +1,55 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "MonitoringContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "NewModels",
+   "ProjectRootNamespace": "Monitoring.DataAccess",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 2,
+   "Tables": [
+      {
+         "Name": "[dbo].[tblAccessPointGroups]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tblCctvCameraGroups]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tblFirewallGroups]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tblNetworkswitchGroups]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tblPrinterGroups]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "DESKTOP-GAB78LQ.Monitoring",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": false,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}
